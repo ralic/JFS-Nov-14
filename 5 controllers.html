@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="base.css"/>
+    <title>Demo</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script>
+        var app = angular.module('myApp', []).controller('MyController', function ($scope) {
+            $scope.message = 'Hello from MyController!';
+        });
+
+        app.controller('Controller2', function ($scope) {
+            $scope.message = 'Hello from Controller 2!';
+
+            // access the controller MyController
+            var DOM_Element = document.querySelector('#myc');
+            console.log(DOM_Element);
+            // jQLite
+            var element = angular.element(DOM_Element);
+            var myc_scope = element.scope();
+
+            myc_scope.$watch('message', function (newval, old) {
+                console.log(newval, old);
+                $scope.myc_message = newval;
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+    <h1>MyController</h1>
+    <div id="myc" ng-controller="MyController">
+        {{message}}
+        <br/>
+        <input type="text" ng-model="message"/>
+    </div>
+
+    <div ng-controller="Controller2">
+        <h1>Controller 2</h1>
+        <div>{{message}}</div>
+        <div>{{myc_message}}</div>
+    </div>
+</body>
+</html>

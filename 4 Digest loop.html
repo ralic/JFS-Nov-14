@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="base.css"/>
+    <title>Demo</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script>
+        var app = angular.module('myApp', []).controller('MyController', function ($scope, $rootScope) {
+            $rootScope.message = 'Message from root scope .. ';
+            $scope.message = 'Message from MyController scope ... ';
+
+            setTimeout(function () {
+                /*$rootScope.message = 'Rootscope message changed by setTimeout handler ... ';
+                $scope.message = 'Message from MyController scope ... changed by setTimeout handler ... ';
+                console.log($scope.message);*/
+                // $scope.$digest();
+
+                $scope.$apply(function () {
+                    $rootScope.message = 'Rootscope message changed by setTimeout handler ... ';
+                    $scope.message = 'Message from MyController scope ... changed by setTimeout handler ... ';
+                    console.log($scope.message);
+                });
+            }, 100);
+        });
+
+        app.controller('Controller2', function ($scope) {
+            // $scope.message = 'message from controller 2';
+        });
+    </script>
+</head>
+<body>
+    <h1>Root Scope</h1>
+    {{message}}
+
+
+    <div ng-controller="Controller2">
+        {{message}}
+    </div>
+
+    <h1>MyController</h1>
+    <div ng-controller="MyController">
+        {{message}}
+
+
+    </div>
+</body>
+</html>

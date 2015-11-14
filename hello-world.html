@@ -2,23 +2,43 @@
 <html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <link rel="stylesheet" href="base.css"/>
+    <title>Hello World in Angular</title>
     <script src="angular.js"></script>
     <script>
 
         var app = angular.module('myApp', []); // [] --> dependencies
 
+        app.run(function ($rootScope) {
+            $rootScope.message = 'This is a mesage form rootScope.';
+        });
+
         app.controller('MyController', function ($scope) {
             $scope.message = 'Hello World from Angular!';
+
+            $scope.address = {
+                city: 'Sunnyvale'
+            };
+
+            $scope.arr = ['John'];
         });
 
     </script>
 </head>
 <body>
 
+    <h1>Root</h1>
+    {{message}}
+
+    <h1>MyController</h1>
     <div ng-controller="MyController">
         {{message}}
+        <br/>
+        The user's city: {{address.city}}
+        The user's name: {{arr[0]}}
+        No conditionals and looping ...
     </div>
+
 
 </body>
 </html>
